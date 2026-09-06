@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hamza Ali Ousalah — Développeur Full-Stack</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#F1F2EE;
+    --panel:#FFFFFF;
+    --ink:#14181C;
+    --ink-soft:#4B5563;
+    --ink-faint:#8A9099;
+    --line:#DBDDD4;
+    --accent:#0E7C7B;
+    --accent-ink:#08302F;
+    --accent-tint:#E3EEEC;
+    --code-bg:#14181C;
+    --code-text:#DDE3E0;
+    --code-key:#7FD1CE;
+    --code-str:#E8A65C;
+    --radius:3px;
+    --max:760px;
+    --wide:980px;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  @media (prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto;}
+    *{animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important;}
+  }
+
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Inter',sans-serif;
+    font-size:16px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  a{color:inherit;}
+  h1,h2,h3{
+    font-family:'Fraunces',serif;
+    font-weight:500;
+    margin:0;
+    letter-spacing:-0.01em;
+  }
+
+  .wrap{max-width:var(--wide);margin:0 auto;padding:0 32px;}
+  .col{max-width:var(--max);}
+
+  /* ---------- NAV ---------- */
+  header{
+    position:sticky;top:0;z-index:50;
+    background:rgba(241,242,238,0.92);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--line);
+  }
+  nav.wrap{
+    display:flex;align-items:center;justify-content:space-between;
+    height:64px;
+  }
+  .brand{
+    font-family:'Fraunces',serif;
+    font-weight:600;
+    font-size:1.05rem;
+  }
+  .brand span{color:var(--accent);}
+  .navlinks{display:flex;gap:28px;list-style:none;margin:0;padding:0;}
+  .navlinks a{
+    font-size:0.92rem;color:var(--ink-soft);text-decoration:none;
+    border-bottom:1px solid transparent;padding-bottom:2px;
+    transition:color .15s, border-color .15s;
+  }
+  .navlinks a:hover, .navlinks a:focus-visible{color:var(--ink);border-color:var(--accent);}
+  .navtoggle{
+    display:none;background:none;border:1px solid var(--line);border-radius:var(--radius);
+    width:38px;height:38px;cursor:pointer;position:relative;
+  }
+  .navtoggle span, .navtoggle::before, .navtoggle::after{
+    content:'';position:absolute;left:9px;right:9px;height:1.5px;background:var(--ink);
+  }
+  .navtoggle::before{top:14px;}
+  .navtoggle span{top:18px;}
+  .navtoggle::after{top:22px;}
+
+  /* ---------- HERO ---------- */
+  .hero{padding:88px 0 96px;}
+  .hero .wrap{display:grid;grid-template-columns:1.1fr 1fr;gap:56px;align-items:center;}
+  .kicker{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:0.82rem;color:var(--accent);
+    margin:0 0 18px;
+  }
+
+  .hero h1{font-size:clamp(2.1rem,4.2vw,3rem);line-height:1.08;}
+  .hero .role{
+    font-family:'Inter',sans-serif;font-weight:500;
+    font-size:1.15rem;color:var(--ink-soft);margin-top:14px;
+  }
+  .hero p.desc{margin-top:20px;color:var(--ink-soft);max-width:46ch;}
+  .cta-row{display:flex;gap:14px;margin-top:32px;flex-wrap:wrap;}
+  .btn{
+    display:inline-flex;align-items:center;gap:8px;
+    padding:11px 20px;border-radius:var(--radius);
+    font-size:0.92rem;font-weight:500;text-decoration:none;
+    border:1px solid var(--ink);transition:background .15s,color .15s;
+  }
+  .btn.primary{background:var(--ink);color:var(--bg);}
+  .btn.primary:hover{background:var(--accent);border-color:var(--accent);}
+  .btn.ghost{border-color:var(--line);color:var(--ink);}
+  .btn.ghost:hover{border-color:var(--ink);}
+
+  .term{
+    background:var(--code-bg);border-radius:6px;padding:0;
+    box-shadow:0 24px 48px -20px rgba(20,24,28,0.35);
+    overflow:hidden;
+  }
+  .term-bar{
+    display:flex;align-items:center;gap:7px;
+    padding:12px 14px;border-bottom:1px solid rgba(255,255,255,0.08);
+  }
+  .term-bar i{width:9px;height:9px;border-radius:50%;background:#4a5158;display:inline-block;}
+  .term-title{
+    margin-left:8px;font-family:'IBM Plex Mono',monospace;font-size:0.72rem;color:#7d8590;
+  }
+  .term-body{
+    padding:22px 20px 26px;font-family:'IBM Plex Mono',monospace;
+    font-size:0.84rem;color:var(--code-text);white-space:pre;overflow-x:auto;
+  }
+  .term-body .k{color:var(--code-key);}
+  .term-body .s{color:var(--code-str);}
+  .term-body .c{color:#6b7280;}
+  .cursor{display:inline-block;width:7px;height:14px;background:var(--code-key);
+    vertical-align:middle;animation:blink 1s steps(1) infinite;}
+  @keyframes blink{50%{opacity:0;}}
+
+  /* ---------- SECTIONS ---------- */
+  section{padding:72px 0;border-top:1px solid var(--line);}
+  .sec-head{margin-bottom:36px;}
+  .sec-head .kicker{margin-bottom:8px;}
+  .sec-head h2{font-size:1.7rem;}
+
+  .about p{color:var(--ink-soft);max-width:64ch;}
+  .about p + p{margin-top:14px;}
+
+  /* Timeline */
+  .timeline{display:flex;flex-direction:column;}
+  .tl-item{
+    display:grid;grid-template-columns:150px 1fr;gap:24px;
+    padding:26px 0;border-top:1px solid var(--line);
+  }
+  .tl-item:first-child{border-top:none;padding-top:0;}
+  .tl-date{
+    font-family:'IBM Plex Mono',monospace;font-size:0.8rem;color:var(--ink-faint);
+    padding-top:3px;
+  }
+  .tl-role{font-family:'Fraunces',serif;font-weight:500;font-size:1.12rem;}
+  .tl-org{color:var(--accent);font-size:0.94rem;margin-top:2px;}
+  .tl-item ul{margin:14px 0 0;padding-left:18px;color:var(--ink-soft);}
+  .tl-item li{margin-bottom:6px;}
+
+  /* Projects */
+  .proj-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line);}
+  .proj-card{background:var(--panel);padding:28px;}
+  .proj-date{font-family:'IBM Plex Mono',monospace;font-size:0.76rem;color:var(--ink-faint);}
+  .proj-card h3{font-size:1.12rem;margin-top:8px;line-height:1.3;}
+  .proj-card p{color:var(--ink-soft);margin-top:10px;font-size:0.93rem;}
+  .tags{display:flex;flex-wrap:wrap;gap:7px;margin-top:16px;}
+  .tag{
+    font-family:'IBM Plex Mono',monospace;font-size:0.72rem;
+    padding:4px 9px;border:1px solid var(--line);border-radius:20px;color:var(--ink-soft);
+  }
+
+  /* Skills */
+  .skill-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:28px 40px;}
+  .skill-group h3{
+    font-family:'IBM Plex Mono',monospace;font-weight:400;font-size:0.82rem;
+    color:var(--accent);margin-bottom:12px;
+  }
+  .skill-group .tags{margin-top:0;}
+  .skill-group .tag{background:var(--accent-tint);border-color:transparent;color:var(--accent-ink);}
+
+  /* Education */
+  .edu-item{padding:22px 0;border-top:1px solid var(--line);}
+  .edu-item:first-child{border-top:none;padding-top:0;}
+  .edu-item .tl-date{display:inline;padding:0;}
+  .edu-item h3{font-size:1.05rem;margin-top:4px;}
+  .edu-item .org{color:var(--accent);font-size:0.93rem;margin-top:2px;}
+  .edu-item ul{color:var(--ink-soft);margin:12px 0 0;padding-left:18px;font-size:0.94rem;}
+  .edu-item li{margin-bottom:5px;}
+
+  /* Langues */
+  .langs{display:flex;gap:32px;flex-wrap:wrap;}
+  .lang-item{font-size:0.94rem;}
+  .lang-item strong{display:block;font-family:'Fraunces',serif;font-size:1.02rem;font-weight:500;}
+  .lang-item span{color:var(--ink-faint);font-size:0.85rem;}
+
+  /* Footer / contact */
+  footer{padding:72px 0 56px;border-top:1px solid var(--line);}
+  .contact-head h2{font-size:2rem;max-width:14ch;}
+  .contact-links{margin-top:28px;display:flex;flex-direction:column;gap:2px;}
+  .contact-links a{
+    display:flex;align-items:baseline;justify-content:space-between;
+    padding:16px 0;border-top:1px solid var(--line);
+    text-decoration:none;font-size:1.05rem;
+  }
+  .contact-links a:first-child{border-top:none;}
+  .contact-links a span.label{color:var(--ink-faint);font-family:'IBM Plex Mono',monospace;font-size:0.78rem;}
+  .contact-links a:hover .val{color:var(--accent);}
+  .val{transition:color .15s;}
+  .foot-note{margin-top:48px;color:var(--ink-faint);font-size:0.82rem;}
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width:860px){
+    .hero .wrap{grid-template-columns:1fr;gap:40px;}
+    .proj-grid{grid-template-columns:1fr;}
+    .skill-grid{grid-template-columns:1fr;}
+  }
+  @media (max-width:680px){
+    .navlinks{
+      position:absolute;top:64px;left:0;right:0;background:var(--bg);
+      border-bottom:1px solid var(--line);
+      flex-direction:column;gap:0;padding:8px 0;
+      display:none;
+    }
+    .navlinks.open{display:flex;}
+    .navlinks a{padding:12px 32px;width:100%;}
+    .navtoggle{display:block;}
+    .wrap{padding:0 20px;}
+    .tl-item{grid-template-columns:1fr;gap:6px;}
+    .term-body{font-size:0.75rem;}
+  }
+
+  :focus-visible{outline:2px solid var(--accent);outline-offset:2px;}
+</style>
+</head>
+<body>
+
+<header>
+  <nav class="wrap">
+    <div class="brand">Hamza Ali Ousalah<span>.</span></div>
+    <ul class="navlinks" id="navlinks">
+      <li><a href="#profil">Profil</a></li>
+      <li><a href="#experience">Expérience</a></li>
+      <li><a href="#projets">Projets</a></li>
+      <li><a href="#competences">Compétences</a></li>
+      <li><a href="#formation">Formation</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <button class="navtoggle" id="navtoggle" aria-label="Ouvrir le menu" aria-expanded="false"><span></span></button>
+  </nav>
+</header>
+
+<main>
+
+  <section class="hero" style="border-top:none;padding-top:64px;">
+    <div class="wrap">
+      <div>
+        <h1>Je construis des systèmes qui&nbsp;fonctionnent&nbsp;vraiment.</h1>
+        <p class="role">Développeur Full-Stack &amp; étudiant finissant en informatique — Université de Montréal</p>
+        <p class="desc">APIs robustes, applications bien structurées, interfaces soignées. Backend, frontend, IA et automatisation de workflows — j'aime comprendre un système de bout en bout et le rendre fiable.</p>
+        <div class="cta-row">
+          <a class="btn primary" href="#projets">Voir mes projets</a>
+          <a class="btn ghost" href="#contact">Me contacter</a>
+        </div>
+      </div>
+      <div class="term" role="img" aria-label="Terminal montrant un objet JSON décrivant le profil de Hamza">
+        <div class="term-bar"><i></i><i></i><i></i><span class="term-title">profil.json</span></div>
+        <div class="term-body">GET /hamza <span class="c">→ 200 OK</span>
+
+{
+  <span class="k">"nom"</span>: <span class="s">"Hamza Ali Ousalah"</span>,
+  <span class="k">"role"</span>: <span class="s">"Développeur Full-Stack"</span>,
+  <span class="k">"base"</span>: <span class="s">"Montréal, QC"</span>,
+  <span class="k">"stack"</span>: [<span class="s">"Node.js"</span>, <span class="s">"React"</span>,
+            <span class="s">"PostgreSQL"</span>, <span class="s">"Python"</span>],
+  <span class="k">"diplome"</span>: <span class="s">"B.Sc. Informatique — mai 2026"</span>,
+  <span class="k">"langues"</span>: [<span class="s">"Français"</span>, <span class="s">"English"</span>, <span class="s">"Arabe"</span>],
+  <span class="k">"disponible"</span>: <span class="s">true</span>
+}<span class="cursor"></span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="profil" class="about">
+    <div class="wrap col">
+      <div class="sec-head"><h2>Qui je suis</h2></div>
+      <p>Étudiant finissant en informatique à l'Université de Montréal (baccalauréat complété en mai 2026), avec une expérience concrète en entreprise et à travers des projets ambitieux. Je m'intéresse autant au développement backend et frontend qu'à l'intelligence artificielle, l'automatisation de workflows et l'analyse de données.</p>
+      <p>Je m'adapte rapidement à de nouveaux environnements et technologies, et je suis bilingue français/anglais.</p>
+    </div>
+  </section>
+
+  <section id="experience">
+    <div class="wrap col">
+      <div class="sec-head"><h2>Parcours professionnel</h2></div>
+      <div class="timeline">
+
+        <div class="tl-item">
+          <div class="tl-date">Mai 2025 —<br>Août 2025</div>
+          <div>
+            <div class="tl-role">Software Developer Intern</div>
+            <div class="tl-org">AGRIDATA Consulting, Maroc</div>
+            <ul>
+              <li>Développé et livré plus de 20 endpoints REST avec Node.js pour un logiciel de gestion agricole utilisé en production par des milliers de clients.</li>
+              <li>Optimisé les requêtes SQL sur une base de données de plus de 100 tables, réduisant le temps de réponse des requêtes critiques d'environ 40 %.</li>
+              <li>Participé activement aux cérémonies Agile au sein d'une équipe de 6 développeurs, avec versionnement via GitHub et suivi via Jira.</li>
+              <li>Validé les endpoints avec Postman et assuré la qualité des intégrations avant chaque mise en production.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-date">Novembre 2025</div>
+          <div>
+            <div class="tl-role">Micro-stage — Assurance qualité et tests logiciels</div>
+            <div class="tl-org">CAE, Montréal, QC</div>
+            <ul>
+              <li>Appliqué des techniques de tests fonctionnels et de vérification de performance sur des plateformes de simulation aéronautique.</li>
+              <li>Attestation officielle délivrée par le Canadian Mobility and Aerospace Institute.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-date">Août 2023 —<br>Mai 2026</div>
+          <div>
+            <div class="tl-role">Agent de service à la clientèle</div>
+            <div class="tl-org">ASAP, Polytechnique Montréal</div>
+            <ul>
+              <li>Géré de façon autonome les opérations quotidiennes de la station, en assurant le bon déroulement du service.</li>
+              <li>Développé de solides compétences en communication, en gestion du stress et en résolution de problèmes dans un environnement à forte affluence.</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <section id="projets">
+    <div class="wrap">
+      <div class="sec-head"><h2>Projets</h2></div>
+      <div class="proj-grid">
+
+        <div class="proj-card">
+          <div class="proj-date">Hiver 2026 — Cours HOR3200, UdeM</div>
+          <h3>Analyse de la gentrification à Montréal</h3>
+          <p>Scraper Python (Scrapy) pour extraire des données sur les logements de Montréal, structurées en CSV/JSON, et visualisées sur une carte interactive montrant l'évolution de la gentrification dans le temps. Projet interdisciplinaire en équipe.</p>
+          <div class="tags">
+            <span class="tag">Python</span><span class="tag">Scrapy</span><span class="tag">Leaflet/Mapbox</span><span class="tag">CSV/JSON</span>
+          </div>
+        </div>
+
+        <div class="proj-card">
+          <div class="proj-date">Avril 2026</div>
+          <h3>Application de gestion de profils — Stack MERN</h3>
+          <p>Application full-stack avec rôles utilisateur/administrateur, authentification JWT et mots de passe chiffrés dans MongoDB. Cinq routes REST documentées et testées avec Postman, contrôle d'accès par rôle, et validation d'adresses courriel via une API externe.</p>
+          <div class="tags">
+            <span class="tag">MongoDB</span><span class="tag">Express.js</span><span class="tag">React.js</span><span class="tag">JWT</span><span class="tag">Bootstrap</span>
+          </div>
+        </div>
+
+        <div class="proj-card">
+          <div class="proj-date">Décembre 2025 — DIRO, UdeM</div>
+          <h3>Assistant conversationnel IA — Aide au choix de cours</h3>
+          <p>API REST façade par-dessus l'API officielle Planium de l'UdeM, avec un LLM open-source (Mistral/LLaMA) intégré dans un bot Discord répondant en langage naturel sur les cours, horaires et prérequis. Recherche, éligibilité, comparaison, détection de conflits d'horaire et avis étudiants, avec pipeline CI/CD et tests JUnit.</p>
+          <div class="tags">
+            <span class="tag">Java</span><span class="tag">LLM</span><span class="tag">Discord Bot</span><span class="tag">Maven</span><span class="tag">GitHub Actions</span>
+          </div>
+        </div>
+
+        <div class="proj-card">
+          <div class="proj-date">Mai — Juillet 2025</div>
+          <h3>Application de gestion agricole — Backend</h3>
+          <p>Backend du logiciel interne « Pack One » d'AGRIDATA Consulting : APIs REST documentées pour la gestion et le suivi des données agricoles, requêtes SQL optimisées et compatibilité inter-modules assurée en collaboration avec l'équipe.</p>
+          <div class="tags">
+            <span class="tag">Node.js</span><span class="tag">Express.js</span><span class="tag">MySQL</span><span class="tag">Postman</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <section id="competences">
+    <div class="wrap col">
+      <div class="sec-head"><h2>Compétences techniques</h2></div>
+      <div class="skill-grid">
+        <div class="skill-group">
+          <h3>Langages</h3>
+          <div class="tags">
+            <span class="tag">Python</span><span class="tag">JavaScript</span><span class="tag">TypeScript</span><span class="tag">Java</span><span class="tag">C</span><span class="tag">C++</span><span class="tag">SQL</span><span class="tag">Bash/Shell</span><span class="tag">PHP</span><span class="tag">HTML5</span><span class="tag">CSS3</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <h3>Backend &amp; web</h3>
+          <div class="tags">
+            <span class="tag">Node.js</span><span class="tag">Express.js</span><span class="tag">FastAPI</span><span class="tag">REST APIs</span><span class="tag">GraphQL</span><span class="tag">React.js</span><span class="tag">Next.js</span><span class="tag">Bootstrap</span><span class="tag">JWT</span><span class="tag">MERN</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <h3>Bases de données</h3>
+          <div class="tags">
+            <span class="tag">PostgreSQL</span><span class="tag">MySQL</span><span class="tag">MongoDB</span><span class="tag">SQLite</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <h3>Analyse de données</h3>
+          <div class="tags">
+            <span class="tag">Excel avancé</span><span class="tag">Power BI</span><span class="tag">Tableau</span><span class="tag">Jupyter</span><span class="tag">Pandas</span><span class="tag">NumPy</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <h3>Cloud &amp; devops</h3>
+          <div class="tags">
+            <span class="tag">Docker</span><span class="tag">AWS</span><span class="tag">CI/CD</span><span class="tag">GitHub Actions</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <h3>Outils &amp; méthodologies</h3>
+          <div class="tags">
+            <span class="tag">Git</span><span class="tag">Jira</span><span class="tag">VS Code</span><span class="tag">Figma</span><span class="tag">Linux</span><span class="tag">Agile/Scrum</span><span class="tag">UML</span><span class="tag">JUnit</span><span class="tag">Postman</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="formation">
+    <div class="wrap col">
+      <div class="sec-head"><h2>Formation</h2></div>
+
+      <div class="edu-item">
+        <span class="tl-date">Août 2023 — Mai 2026</span>
+        <h3>Baccalauréat en Informatique (B.Sc.)</h3>
+        <div class="org">Université de Montréal</div>
+        <ul>
+          <li>Bourse d'exemption UdeM, accordée sur la base de l'excellence académique</li>
+          <li>Cours pertinents : algorithmes et structures de données, bases de données, développement logiciel, intelligence artificielle, réseaux, systèmes d'exploitation</li>
+          <li>Membre du GDSC UdeM (Google Developer Student Club) et du Club IA-UdeM</li>
+        </ul>
+      </div>
+
+      <div class="edu-item">
+        <span class="tl-date">Juin 2022</span>
+        <h3>Baccalauréat en Sciences Physiques — option français</h3>
+        <div class="org">Institution Al Hanane 2 Privée, Agadir, Maroc — Mention Très Bien</div>
+      </div>
+
+      <div class="edu-item">
+        <span class="tl-date">Novembre 2025</span>
+        <h3>Certification — Qualité et tests logiciels</h3>
+        <div class="org">Canadian Mobility and Aerospace Institute (CMAI), via CAE Montréal</div>
+      </div>
+
+      <div style="margin-top:36px;">
+        <p class="kicker" style="margin-bottom:14px;">Langues</p>
+        <div class="langs">
+          <div class="lang-item"><strong>Français</strong><span>Courant</span></div>
+          <div class="lang-item"><strong>Anglais</strong><span>Courant</span></div>
+          <div class="lang-item"><strong>Arabe</strong><span>Langue maternelle</span></div>
+          <div class="lang-item"><strong>Espagnol</strong><span>Notions</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer id="contact">
+    <div class="wrap col">
+      <div class="contact-head">
+        <h2>Contact :</h2>
+      </div>
+      <div class="contact-links">
+        <a href="mailto:aliousalahhamza6@gmail.com"><span class="label">Email</span><span class="val">aliousalahhamza6@gmail.com</span></a>
+        <a href="tel:+15145735671"><span class="label">Téléphone</span><span class="val">+1 514-573-5671</span></a>
+        <a href="https://linkedin.com/in/hamzaaliousalah" target="_blank" rel="noopener"><span class="label">Linkedin</span><span class="val">linkedin.com/in/hamzaaliousalah</span></a>
+        <a href="https://github.com/hamzaaliousalah" target="_blank" rel="noopener"><span class="label">Github</span><span class="val">github.com/hamzaaliousalah</span></a>
+      </div>
+      <p class="foot-note">Montréal, QC, Canada</p>
+    </div>
+  </footer>
+
+</main>
+
+<script>
+  const toggle = document.getElementById('navtoggle');
+  const links = document.getElementById('navlinks');
+  toggle.addEventListener('click', () => {
+    const open = links.classList.toggle('open');
+    toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+  links.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+    links.classList.remove('open');
+    toggle.setAttribute('aria-expanded', 'false');
+  }));
+</script>
+
+</body>
+</html>
